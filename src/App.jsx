@@ -1,7 +1,7 @@
 export default function App() {
   return (
     <>
-      <h1>Hello World</h1>
+      <h1 className="underline text-3xl text-amber-600">Hello World</h1>
     </>
   )
 }
