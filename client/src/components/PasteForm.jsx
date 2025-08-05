@@ -48,13 +48,13 @@ const PasteForm = () => {
 
     try {
       const pasteData = {
-        title: formData.title || undefined,
-        content: formData.content,
+        title: formData.title.trim() || undefined,
+        content: formData.content.trim(),
         language: formData.language,
         expiresAt:
           formData.expiresIn === "never"
             ? null
-            : calculateExpirationDate(formData.expiresIn),
+            : calculateExpirationDate(formData.expiresIn)?.toISOString(),
       };
 
       const result = await createPaste(pasteData);
