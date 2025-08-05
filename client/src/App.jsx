@@ -1,7 +1,14 @@
+import { Routes, Route } from "react-router";
+import Home from "./pages/Home.jsx";
+import PasteView from "./pages/PasteView.jsx";
+
 export default function App() {
   return (
     <>
-      <h1 className="underline text-3xl text-amber-600">Hello World</h1>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/:id" element={<PasteView />} />
+      </Routes>
     </>
-  )
+  );
 }
