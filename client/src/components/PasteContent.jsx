@@ -93,7 +93,7 @@ const PasteContent = ({ pasteId }) => {
       </div>
 
       {/* Main code area */}
-      <div className="flex-1 w-full bg-[#26292c]">
+      <div className="flex-1 w-full bg-[#181b1f]">
         {loading && (
           <div className="flex justify-center items-center min-h-[300px] text-gray-400">
             Loading...
@@ -110,7 +110,7 @@ const PasteContent = ({ pasteId }) => {
           </div>
         )}
         {!loading && !error && paste && (
-          <div className="w-full overflow-x-auto bg-[#26292c]">
+          <div className="w-full overflow-x-auto bg-[#181b1f]">
             {/* Copy button absolutely positioned in the top right of the code block */}
             <div className="relative mb-2">
               <button
@@ -128,7 +128,7 @@ const PasteContent = ({ pasteId }) => {
                   style={oneDark}
                   customStyle={{
                     margin: 0,
-                    background: "#26292c",
+                    background: "#181b1f",
                     fontSize: "15px",
                     borderRadius: "0",
                     padding: "0.5rem",
