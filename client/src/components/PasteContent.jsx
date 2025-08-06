@@ -78,9 +78,6 @@ const PasteContent = ({ pasteId }) => {
             <div>
               <span className="font-medium">Expires:</span> {expiresText}
             </div>
-            <div>
-              <span>Viewing paste: {pasteId}</span>
-            </div>
           </div>
           <button
             className="ml-auto flex flex-row items-center text-blue-500 whitespace-nowrap"
