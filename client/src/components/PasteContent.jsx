@@ -65,32 +65,34 @@ const PasteContent = ({ pasteId }) => {
   return (
     <div className="min-h-screen w-full bg-[#26292c] flex flex-col">
       {/* Top meta bar */}
-      <div className="w-full px-2 sm:px-6 py-4 flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-6 text-gray-300 bg-[#2e3136] border-b border-[#222]">
-        <h1 className="text-xl font-bold tracking-tight text-gray-200 break-all">
-          {paste?.title || "Untitled Paste"}
-        </h1>
-        <div className="flex flex-col sm:flex-row flex-1 gap-2 sm:gap-4 text-sm text-gray-400">
-          <div>
-            <span className="font-medium">Language:</span>{" "}
-            <span className="font-mono">{paste?.language}</span>
+      <div className="w-full overflow-x-auto bg-[#2e3136] border-b border-[#222]">
+        <div className="flex flex-row flex-nowrap items-center gap-3 px-2 sm:px-6 py-4 text-gray-300 min-w-[420px]">
+          <h1 className="text-xl font-bold tracking-tight text-gray-200 break-all whitespace-nowrap">
+            {paste?.title || "Untitled Paste"}
+          </h1>
+          <div className="flex flex-wrap flex-row gap-2 text-sm text-gray-400 whitespace-nowrap">
+            <div>
+              <span className="font-medium">Language:</span>{" "}
+              <span className="font-mono">{paste?.language}</span>
+            </div>
+            <div>
+              <span className="font-medium">Expires:</span> {expiresText}
+            </div>
+            <div>
+              <span>Viewing paste: {pasteId}</span>
+            </div>
           </div>
-          <div>
-            <span className="font-medium">Expires:</span> {expiresText}
-          </div>
-          <div>
-            <span>Viewing paste: {pasteId}</span>
-          </div>
+          <button
+            className="ml-auto flex flex-row items-center text-blue-500 whitespace-nowrap"
+            onClick={() => navigate("/")}
+            title="New Paste"
+          >
+            <MdAddBox className="inline-block cursor-pointer size-6" />
+            <span className="hidden sm:inline-block ml-1 font-medium cursor-pointer">
+              New Paste
+            </span>
+          </button>
         </div>
-        <button
-          className="ml-0 sm:ml-auto flex flex-row items-center text-blue-500"
-          onClick={() => navigate("/")}
-          title="New Paste"
-        >
-          <MdAddBox className="inline-block cursor-pointer size-6" />
-          <span className="hidden sm:inline-block ml-1 font-medium">
-            New Paste
-          </span>
-        </button>
       </div>
 
       {/* Main code area */}
@@ -112,37 +114,41 @@ const PasteContent = ({ pasteId }) => {
         )}
         {!loading && !error && paste && (
           <div className="w-full overflow-x-auto bg-[#26292c]">
-            <div className="flex justify-end mb-2">
+            {/* Copy button absolutely positioned in the top right of the code block */}
+            <div className="relative mb-2">
               <button
                 onClick={handleCopy}
-                className="flex items-center gap-1 text-gray-300 bg-[#35373b] hover:bg-[#43464a] px-3 py-1 rounded transition"
+                className="absolute top-2 right-2 flex items-center gap-1 text-gray-300 bg-[#35373b] hover:bg-[#43464a] px-3 py-1 rounded transition z-10"
                 title="Copy to clipboard"
+                style={{ height: "fit-content" }}
               >
                 <MdContentCopy className="size-5" />
                 <span className="text-sm">{copied ? "Copied!" : "Copy"}</span>
               </button>
+              <div className="flex-1 min-w-0">
+                <SyntaxHighlighter
+                  language={getLanguageForHighlighting(paste.language)}
+                  style={oneDark}
+                  customStyle={{
+                    margin: 0,
+                    background: "#26292c",
+                    fontSize: "15px",
+                    borderRadius: "0",
+                    padding: "0.5rem",
+                    height: "auto",
+                    maxHeight: "none",
+                    overflow: "visible",
+                    width: "fit-content",
+                    minWidth: "100%",
+                  }}
+                  showLineNumbers={true}
+                  wrapLines={true}
+                  wrapLongLines={true}
+                >
+                  {paste.content}
+                </SyntaxHighlighter>
+              </div>
             </div>
-            <SyntaxHighlighter
-              language={getLanguageForHighlighting(paste.language)}
-              style={oneDark}
-              customStyle={{
-                margin: 0,
-                background: "#26292c",
-                fontSize: "15px",
-                borderRadius: "0",
-                padding: "0.5rem",
-                height: "auto",
-                maxHeight: "none",
-                overflow: "visible",
-                width: "fit-content",
-                minWidth: "100%",
-              }}
-              showLineNumbers={true}
-              wrapLines={true}
-              wrapLongLines={true}
-            >
-              {paste.content}
-            </SyntaxHighlighter>
           </div>
         )}
       </div>
