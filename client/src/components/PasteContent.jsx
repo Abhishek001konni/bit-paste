@@ -3,12 +3,13 @@ import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { getPaste } from "../api/pasteApi";
 import { useNavigate } from "react-router";
-import { MdAddBox } from "react-icons/md";
+import { MdAddBox, MdContentCopy } from "react-icons/md";
 
 const PasteContent = ({ pasteId }) => {
   const [paste, setPaste] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     const fetchPaste = async () => {
@@ -51,6 +52,16 @@ const PasteContent = ({ pasteId }) => {
       ? new Date(paste.expiresAt).toLocaleString()
       : "";
 
+  // Copy to clipboard handler
+  const handleCopy = () => {
+    if (paste && paste.content) {
+      navigator.clipboard.writeText(paste.content).then(() => {
+        setCopied(true);
+        setTimeout(() => setCopied(false), 1500);
+      });
+    }
+  };
+
   return (
     <div className="min-h-screen w-full bg-[#26292c] flex flex-col">
       {/* Top meta bar */}
@@ -76,7 +87,7 @@ const PasteContent = ({ pasteId }) => {
           title="New Paste"
         >
           <MdAddBox className="inline-block cursor-pointer size-6" />
-          <span className="hidden sm:inline-block ml-1 font-medium cursor-pointer">
+          <span className="hidden sm:inline-block ml-1 font-medium">
             New Paste
           </span>
         </button>
@@ -101,6 +112,16 @@ const PasteContent = ({ pasteId }) => {
         )}
         {!loading && !error && paste && (
           <div className="w-full overflow-x-auto bg-[#26292c]">
+            <div className="flex justify-end mb-2">
+              <button
+                onClick={handleCopy}
+                className="flex items-center gap-1 text-gray-300 bg-[#35373b] hover:bg-[#43464a] px-3 py-1 rounded transition"
+                title="Copy to clipboard"
+              >
+                <MdContentCopy className="size-5" />
+                <span className="text-sm">{copied ? "Copied!" : "Copy"}</span>
+              </button>
+            </div>
             <SyntaxHighlighter
               language={getLanguageForHighlighting(paste.language)}
               style={oneDark}
