@@ -3,7 +3,7 @@ import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { getPaste } from "../api/pasteApi";
 import { useNavigate } from "react-router";
-
+import { MdAddBox } from "react-icons/md";
 
 const PasteContent = ({ pasteId }) => {
   const [paste, setPaste] = useState(null);
@@ -26,7 +26,6 @@ const PasteContent = ({ pasteId }) => {
       fetchPaste();
     }
   }, [pasteId]);
-
 
   const navigate = useNavigate();
 
@@ -59,7 +58,7 @@ const PasteContent = ({ pasteId }) => {
         <h1 className="text-xl font-bold tracking-tight text-gray-200 break-all">
           {paste?.title || "Untitled Paste"}
         </h1>
-        <div className="flex flex-row gap-4 text-sm text-gray-400">
+        <div className="flex flex-col sm:flex-row flex-1 gap-2 sm:gap-4 text-sm text-gray-400">
           <div>
             <span className="font-medium">Language:</span>{" "}
             <span className="font-mono">{paste?.language}</span>
@@ -70,12 +69,17 @@ const PasteContent = ({ pasteId }) => {
           <div>
             <span>Viewing paste: {pasteId}</span>
           </div>
-          <div>
-            <button className="text-blue-500 hover:underline" onClick={() => navigate('/')} >
-              New Paste
-            </button>
-          </div>
         </div>
+        <button
+          className="ml-0 sm:ml-auto flex flex-row items-center text-blue-500"
+          onClick={() => navigate("/")}
+          title="New Paste"
+        >
+          <MdAddBox className="inline-block cursor-pointer size-6" />
+          <span className="hidden sm:inline-block ml-1 font-medium cursor-pointer">
+            New Paste
+          </span>
+        </button>
       </div>
 
       {/* Main code area */}
