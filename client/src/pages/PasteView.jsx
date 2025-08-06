@@ -6,7 +6,6 @@ const PasteView = () => {
 
     return (
         <div>
-            <h1>Viewing Paste: {id}</h1>
             <PasteContent pasteId={id} />
         </div>
     );
