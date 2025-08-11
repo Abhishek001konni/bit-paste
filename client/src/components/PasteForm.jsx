@@ -13,10 +13,8 @@ const PasteForm = () => {
 
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-
   const navigate = useNavigate();
 
-  // Helper function to calculate expiration date
   const calculateExpirationDate = (expiresIn) => {
     const now = new Date();
     switch (expiresIn) {
@@ -35,15 +33,11 @@ const PasteForm = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     setLoading(true);
     setError(null);
 
@@ -59,7 +53,6 @@ const PasteForm = () => {
       };
 
       const result = await createPaste(pasteData);
-
       navigate(`/${result._id}`);
     } catch (err) {
       setError(err.message);
@@ -69,34 +62,29 @@ const PasteForm = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#23272e] flex flex-col px-2 py-8 sm:px-0">
+    <div className="min-h-screen bg-[#1a1d21] text-gray-100 flex flex-col px-4 py-10">
       {/* Header */}
-      <div className="w-full max-w-3xl mx-auto flex items-center gap-2 mb-8 px-2">
-        <MdContentPaste className="text-blue-500 text-3xl" />
-        <h1 className="text-3xl font-extrabold text-gray-100 tracking-tight">
-          Create a New Paste
-        </h1>
+      <div className="max-w-3xl mx-auto w-full mb-10 flex items-center gap-3">
+        <MdContentPaste className="text-blue-500 text-4xl" />
+        <h1 className="text-3xl font-bold tracking-tight">Create a New Paste</h1>
       </div>
 
-      {/* Error */}
+      {/* Error Message */}
       {error && (
-        <div className="max-w-3xl w-full mx-auto p-4 bg-red-900/60 text-red-200 rounded-lg mb-4 border border-red-700">
+        <div className="max-w-3xl mx-auto w-full bg-red-900/40 text-red-300 px-4 py-3 rounded-lg mb-6 border border-red-700">
           {error}
         </div>
       )}
 
-      {/* Full width form */}
+      {/* Form */}
       <form
         onSubmit={handleSubmit}
-        className="w-full max-w-3xl mx-auto flex flex-col gap-7 px-2"
+        className="max-w-3xl mx-auto w-full flex flex-col gap-8"
       >
         {/* Title */}
         <div>
-          <label
-            htmlFor="title"
-            className="block text-sm font-semibold text-gray-300 mb-1"
-          >
-            Title <span className="text-gray-500 font-normal">(optional)</span>
+          <label htmlFor="title" className="block text-sm font-medium mb-2">
+            Title <span className="text-gray-500">(optional)</span>
           </label>
           <input
             type="text"
@@ -105,19 +93,15 @@ const PasteForm = () => {
             value={formData.title}
             onChange={handleInputChange}
             disabled={loading}
-            placeholder="Enter a title for your paste"
-            className="w-full px-3 py-2 rounded-md border border-gray-700 bg-[#23272e] text-gray-100 shadow-inner focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+            placeholder="Enter a title"
+            className="w-full px-4 py-2 rounded-lg bg-[#23272e] focus:ring-2 focus:ring-blue-500 outline-none transition"
           />
         </div>
 
-        {/* Language & Expiry Row */}
-        <div className="flex flex-col sm:flex-row gap-5">
-          {/* Language */}
+        {/* Language & Expiration */}
+        <div className="flex flex-col sm:flex-row gap-6">
           <div className="flex-1">
-            <label
-              htmlFor="language"
-              className="block text-sm font-semibold text-gray-300 mb-1"
-            >
+            <label htmlFor="language" className="block text-sm font-medium mb-2">
               Language
             </label>
             <select
@@ -126,7 +110,7 @@ const PasteForm = () => {
               value={formData.language}
               onChange={handleInputChange}
               disabled={loading}
-              className="w-full px-3 py-2 rounded-md border border-gray-700 bg-[#23272e] text-gray-100 shadow-inner focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full px-4 py-2 rounded-lg bg-[#23272e] focus:ring-2 focus:ring-blue-500 outline-none transition"
             >
               <option value="plaintext">Plain Text</option>
               <option value="javascript">JavaScript</option>
@@ -138,21 +122,17 @@ const PasteForm = () => {
               <option value="markdown">Markdown</option>
             </select>
           </div>
-          {/* Expires */}
           <div className="flex-1">
-            <label
-              htmlFor="expires"
-              className="block text-sm font-semibold text-gray-300 mb-1"
-            >
+            <label htmlFor="expiresIn" className="block text-sm font-medium mb-2">
               Expires
             </label>
             <select
-              id="expires"
+              id="expiresIn"
               name="expiresIn"
               value={formData.expiresIn}
               onChange={handleInputChange}
               disabled={loading}
-              className="w-full px-3 py-2 rounded-md border border-gray-700 bg-[#23272e] text-gray-100 shadow-inner focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full px-4 py-2 rounded-lg bg-[#23272e] focus:ring-2 focus:ring-blue-500 outline-none transition"
             >
               <option value="never">Never</option>
               <option value="1h">1 Hour</option>
@@ -165,10 +145,7 @@ const PasteForm = () => {
 
         {/* Content */}
         <div>
-          <label
-            htmlFor="content"
-            className="block text-sm font-semibold text-gray-300 mb-1"
-          >
+          <label htmlFor="content" className="block text-sm font-medium mb-2">
             Content <span className="text-red-400">*</span>
           </label>
           <textarea
@@ -180,7 +157,7 @@ const PasteForm = () => {
             required
             rows={14}
             placeholder="Paste your content here..."
-            className="w-full px-3 py-2 rounded-md border border-gray-700 bg-[#181b1f] text-gray-100 font-mono text-[15px] shadow-inner focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 min-h-[200px] resize-y"
+            className="w-full px-4 py-3 rounded-lg bg-[#181b1f] font-mono text-sm focus:ring-2 focus:ring-blue-500 outline-none transition resize-y"
           />
         </div>
 
@@ -188,7 +165,7 @@ const PasteForm = () => {
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-[#2563eb] hover:bg-[#1d4ed8] text-white font-bold py-2 px-6 rounded-md shadow-md transition disabled:opacity-60 disabled:cursor-not-allowed text-lg flex items-center justify-center gap-2"
+          className="bg-blue-600 hover:bg-blue-500 text-white font-semibold py-3 px-6 rounded-lg flex items-center justify-center gap-2 transition disabled:opacity-60"
         >
           {loading ? (
             <span className="animate-pulse">Creating...</span>
@@ -205,3 +182,4 @@ const PasteForm = () => {
 };
 
 export default PasteForm;
+
