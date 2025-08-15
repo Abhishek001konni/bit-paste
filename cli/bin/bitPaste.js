@@ -2,6 +2,7 @@
 import "dotenv/config";
 import { program } from "commander";
 import uploadCommand from "../src/commands/upload.js";
+import viewCommand from "../src/commands/view.js";
 
 program
   .name("bitpaste")
@@ -9,6 +10,7 @@ program
   .version("1.0.0");
 
 uploadCommand(program);
+viewCommand(program);
 
 program.parse(process.argv);
 
