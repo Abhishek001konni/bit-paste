@@ -85,8 +85,8 @@ export default function uploadCommand(program) {
           }
           process.exit(1);
         }
-        
-        const pasteUrl = `${apiBase}/${data._id}`;
+
+        const pasteUrl = `https://bit-paste.vercel.app/${data._id}`;
         console.log(chalk.green("Paste created successfully!"));
         console.log(`URL: ${chalk.blue(pasteUrl)}`);
       } catch (err) {
