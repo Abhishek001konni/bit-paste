@@ -9,7 +9,7 @@ import pasteRoutes from "./routes/pasteRoutes.js";
 dotenv.config();
 
 // Connect MongoDB
-connectDB();
+await connectDB();
 
 const app = express();
 const PORT = process.env.PORT;
