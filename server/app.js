@@ -19,6 +19,11 @@ app.use(cors());
 app.use(express.json());
 app.use(helmet());
 
+// Health check endpoint
+app.get('/health', (req, res) => {
+  res.status(200).send('OK');
+});
+
 // Routes
 app.use("/api/pastes", pasteRoutes);
 
